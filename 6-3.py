@@ -74,6 +74,8 @@ def calc_segment(M, e, c):
                 ii = new
                 min_i = i
         
+        if min_i == 1:
+            min_i = 0
         seg_list.append([min_i,j])
         j = min_i - 1
     
@@ -81,7 +83,7 @@ def calc_segment(M, e, c):
             
 
 def main():
-    c = 10
+    c = 2
     x,y = make_points()
     e=calc_error(x,y)
     M = calc_opt(e, c)
@@ -89,7 +91,15 @@ def main():
 
     # plotしたら完成!!
     l_list = []
-    for 
+    plt.scatter(x, y)
+    for s in seg_list:
+        xx = x[s[0]:s[1] + 1]
+        yy = y[s[0]:s[1] + 1]
+        a, b = reg1dim(xx, yy)
+
+        yy = a * xx + b
+
+        plt.plot(xx, yy)
 
 
 def test2():
