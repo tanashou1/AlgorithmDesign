@@ -1,6 +1,7 @@
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
+import time
 
 def reg1dim(x, y):
     n = len(x)
@@ -37,7 +38,7 @@ def make_points():
     y_list = []
     by = b
 
-    np.random.seed(40)
+    np.random.seed(0)
 
     for s, a in zip(seg_list, a_list):
         for x in range(s[0], s[1]+1):
@@ -83,14 +84,17 @@ def calc_segment(M, e, c):
             
 
 def main():
-    c = 2
+    
+    c = 10
+    st = time.time()
     x,y = make_points()
     e=calc_error(x,y)
     M = calc_opt(e, c)
     seg_list = calc_segment(M, e, c)
 
-    # plotしたら完成!!
-    l_list = []
+    print(time.time() - st)
+
+    # plot
     plt.scatter(x, y)
     for s in seg_list:
         xx = x[s[0]:s[1] + 1]
@@ -100,24 +104,14 @@ def main():
         yy = a * xx + b
 
         plt.plot(xx, yy)
+    
+    plt.xlabel("x")
+    plt.ylabel("y")
 
+if __name__ == "__main__":
+    main()
+    # x,y = make_points()
+    # print(np.var(x))
+    # print(np.var(y))
+    
 
-def test2():
-    x,y = make_points()
-    a,b = reg1dim(x,y)
-
-def test():
-    x,y = make_points()
-    a,b = reg1dim(x,y)
-    print(calc_error(x,y))
-    plt.scatter(x,y)
-    plt.scatter(x,a*x+b)
-    plt.show()
-
-
-main()
-
-
-# %%
-for i in list(range(0,10))[::-1]:
-    print(i)
